@@ -1,5 +1,7 @@
-/**
-* Stylish Select 0.4.5 - jQuery plugin to replace a select drop down box with a stylable unordered list
+/**      
+* This is Adam Haris's fork
+*
+* Stylish Select 0.4.4 - jQuery plugin to replace a select drop down box with a stylable unordered list
 * http://github.com/sko77sun/Stylish-Select
 * 
 * Requires: jQuery 1.3 or newer
@@ -84,10 +86,11 @@
 		return this.each(function()
 		{
 			var defaults = {
-				defaultText:    'Please select',
+				defaultText:    'válasszon',
 				animationSpeed: 0, //set speed of dropdown
 				ddMaxHeight:    '', //set css max-height value of dropdown
-				containerClass: '' //additional classes for container div
+				containerClass: '', //additional classes for container div    
+				paramName: '' //get url params value
 			};
 
 			//initial variables
@@ -130,7 +133,7 @@
 
 					//add first letter of each word to array
 					keys.push(option.charAt(0).toLowerCase());
-					if ($(this).attr('selected') == 'selected' || $(this).attr('selected') == true)
+					if ($(this).attr('selected') == 'selected')
 					{
 						opts.defaultText = option;
 						currentIndex = prevIndex = i;
@@ -160,7 +163,7 @@
 						var key = $(this).val();
 						//add first letter of each word to array
 						keys.push(option.charAt(0).toLowerCase());
-						if ($(this).attr('selected') == 'selected' || $(this).attr('selected') == true)
+						if ($(this).attr('selected') == 'selected')
 						{
 							opts.defaultText = option;
 							currentIndex = prevIndex = itemIndex;
@@ -184,9 +187,28 @@
 				navigateList(currentIndex);
 			}
 			else
-			{
-				//set placeholder text
-				$containerDivText.text(opts.defaultText);
+			{       
+			  // if select has default text, but want use selected param // added by Adam Haris          
+			  if (opts.paramName) 
+			  {                      
+			     var param = getParameterByName(opts.paramName);    
+			     if (param != "")
+			     {                     
+			        var option_text = $("#"+$(this).attr('id')+" option[value='"+param+"']").text()
+              $containerDivText.text(option_text); 
+			     }
+			     else
+     			  {
+     			     //set placeholder text
+       				$containerDivText.text(opts.defaultText);
+     			  }
+			  }
+			  else
+			  {
+			     //set placeholder text
+  				$containerDivText.text(opts.defaultText);
+			  }
+				
 			}
 
 			//decide if to place the new list above or below the drop-down
@@ -198,6 +220,12 @@
 
 				//if height of list is greater then max height, set list height to max height value
 				if (newUlHeight > parseInt(opts.ddMaxHeight))
+				{
+					newUlHeight = parseInt(opts.ddMaxHeight);
+				}
+				
+				//if the form has display:none property (added by Adam Haris)
+				if (newUlHeight == 0)
 				{
 					newUlHeight = parseInt(opts.ddMaxHeight);
 				}
@@ -277,7 +305,6 @@
 				positionFix();
 				
 				//scroll list to selected item
-				if(currentIndex == -1) currentIndex = 0;
 				$newLi.eq(currentIndex).focus();
 			});
 
@@ -325,7 +352,21 @@
 					$hoveredLi.removeClass('newListHover');
 				}
 				);
+      
 
+        function getParameterByName(name)
+        {
+          name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+          var regexS = "[\\?&]" + name + "=([^&#]*)";
+          var regex = new RegExp(regexS);
+          var results = regex.exec(window.location.href);
+          if(results == null)
+            return "";
+          else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+      
+      
 			function navigateList(currentIndex, fireChange)
 			{
 				if(currentIndex == -1)
