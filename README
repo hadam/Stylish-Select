@@ -9,7 +9,7 @@ ChangeLog:
 ==2011. 08. 06.
   * fixed hidden elements bug (display:none property)
   * add paramName option: selected attribute alternative with defaultText option:
-      $("#city_").sSelect({defaultText : 'select_city...', paramName : 'city'});  
+      $("#city").sSelect({defaultText : 'select_city...', paramName : 'city'});  
       <select id="city">
       ...
       <option value="2">Pécs, Hungary </option>  
