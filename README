@@ -1,0 +1,19 @@
+== Stylish-Select
+A cross-browser, accessible alternative to the standard form select element which can be fully customised with CSS
+
+forked from sko77sun/Stylish-Select
+forked by Adam  Haris
+          
+
+ChangeLog:
+==2011. 08. 06.
+  * add hidden elements bug fix  
+  * add paramName option: selected attribute alternative with defaultText option:
+      $("#city_").sSelect({defaultText : 'select_city...', paramName : 'city'});  
+      <select id="city">
+      ...
+      <option value="2">Pécs, Hungary </option>  
+      ...
+      it works with querystring, if you something like www.lorem.com/ipsum?city=2 (2 is the select value), the plugin search select option's text value, in this case "Pécs"   
+  
+    
