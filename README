@@ -14,6 +14,7 @@ ChangeLog:
       ...
       <option value="2">Pécs, Hungary </option>  
       ...
-      it works with querystring, if you something like www.lorem.com/ipsum?city=2 (2 is the select value), the plugin search select option's text value, in this case "Pécs"   
+      it works with querystring, if you use something like www.lorem.com/ipsum?city=2 (2 is the select value),
+      the plugin search select option's text value, in this case "Pécs", and set this value to dafaultText 
   
     
